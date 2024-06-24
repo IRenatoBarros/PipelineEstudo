@@ -19,7 +19,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: compilação babilonica
-      run: javac src/Main.java
+      run: javac src/Conexao.java
     - name: rodada de milhoes
       run: java src/Main.java
     - name: Git Version
