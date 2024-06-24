@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 19
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: '19'
+        java-version: '17'
         distribution: 'temurin'
     - name: compilação babilonica
       run: javac src/Main.java
@@ -29,7 +29,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v6.4
       with:
         # Name of the Docker image
-        image: irenatobarros/imagemTeste
+        image: irenatobarros/imagemteste
         # gerando versao faraonica
         tags: ${{ github.run_number }}, ${{ steps.gerador.outputs.version }}
         # Target Docker registry
