@@ -1,0 +1,40 @@
+name: Java Calculadora
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 19
+      uses: actions/setup-java@v3
+      with:
+        java-version: '19'
+        distribution: 'temurin'
+    - name: compilação babilonica
+      run: javac src/Main.java
+    - name: rodada de milhoes
+      run: java src/Main.java
+    - name: Git Version
+      id: gerador
+      uses: codacy/git-version@2.4.0
+    - name: Docker Build & Push Action
+      uses: mr-smithers-excellent/docker-build-push@v6.4
+      with:
+        # Name of the Docker image
+        image: joaodinizaraujo/java_sem_maven
+        # gerando versao faraonica
+        tags: ${{ github.run_number }}, ${{ steps.gerador.outputs.version }}
+        # Target Docker registry
+        registry: docker.io 
+        # Location of Dockerfile, if not Dockerfile in root directory
+        dockerfile: dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
